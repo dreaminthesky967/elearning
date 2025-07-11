@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-6 bg-white rounded-xl shadow-md">
+  <h2 class="text-2xl font-bold text-gray-700 mb-4">Daftar Kursus</h2>
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="text-sm font-semibold text-gray-600 border-b">
+        <th class="p-2">#</th>
+        <th class="p-2">Judul</th>
+        <th class="p-2">Dosen</th>
+        <th class="p-2">Program Studi</th>
+        <th class="p-2">Mahasiswa Terdaftar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+      <tr class="text-sm text-gray-700 hover:bg-gray-100">
+        <td class="p-2">{{ forloop.counter }}</td>
+        <td class="p-2">{{ course.judul }}</td>
+        <td class="p-2">{{ course.dosen.get_full_name }}</td>
+        <td class="p-2">{{ course.program_studi.nama }}</td>
+        <td class="p-2">{{ course.mahasiswa_terdaftar.count }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="p-2 text-center text-gray-500">Tidak ada kursus tersedia.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
