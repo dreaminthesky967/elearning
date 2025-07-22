@@ -1,14 +1,49 @@
-{% load static tailwind_tags %}
+<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-LEARNING</title>
-    {% tailwind_css %}
+  <meta charset="UTF-8">
+  <title>{% block title %}E-Learning{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    .loader {
+      border-top-color: #3498db;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100">
-    {% block content %}
-    {% endblock %}
+<body class="bg-gray-100 text-gray-800">
+
+<!-- Loader -->
+<div id="page-loader" class="fixed inset-0 bg-white z-50 items-center justify-center hidden">
+  <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full loader"></div>
+</div>
+
+<div class="flex min-h-screen">
+  {% block sidebar %}{% endblock %}
+  <main class="flex-1 p-6 overflow-y-auto bg-white shadow-inner rounded-lg">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<script>
+  lucide.createIcons();
+  const links = document.querySelectorAll("a");
+  links.forEach(link => {
+    link.addEventListener("click", e => {
+      if (link.getAttribute("href") !== "#") {
+        document.getElementById("page-loader").classList.remove("hidden");
+      }
+    });
+  });
+</script>
 </body>
 </html>

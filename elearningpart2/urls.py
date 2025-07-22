@@ -16,27 +16,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core import views as views
+from core import  views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('logout/', views.logout, name='logout'),
 
-    # Dashboard
+    # Dashboard umum
     path('dashboard/', views.dashboard_view, name='dashboard'),
+
+    # Dashboard role-based
+    path('dashboard/admin/', views.is_admin, name='dashboard_admin'),
+    path('dashboard/dosen/', views.is_dosen, name='dashboard_dosen'),
+    path('dashboard/mahasiswa/', views.is_mahasiswa, name='dashboard_mahasiswa'),
 
     # CRUD Mahasiswa
     path('students/', views.StudentListView.as_view(), name='student-list'),
     path('students/add/', views.StudentCreateView.as_view(), name='student-create'),
     path('students/<int:pk>/edit/', views.StudentUpdateView.as_view(), name='student-update'),
     path('students/<int:pk>/delete/', views.StudentDeleteView.as_view(), name='student-delete'),
-    
+
     # CRUD Kursus
     path('courses/', views.CourseListView.as_view(), name='course-list'),
     path('courses/add/', views.CourseCreateView.as_view(), name='course-create'),
     path('courses/<int:pk>/edit/', views.CourseUpdateView.as_view(), name='course-update'),
     path('courses/<int:pk>/delete/', views.CourseDeleteView.as_view(), name='course-delete'),
-]
+    
+    path('modul-materi/', views.ModulMateriListView.as_view(), name='modul_materi_list'),
 
+]
 
